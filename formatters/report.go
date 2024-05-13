@@ -8,10 +8,10 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/version"
 	"github.com/gobuffalo/envy"
+	"github.com/sirupsen/logrus"
 )
 
 type Report struct {

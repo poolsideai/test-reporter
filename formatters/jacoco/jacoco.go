@@ -7,11 +7,11 @@ import (
 	"path"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/gobuffalo/envy"
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
 )
 
 var searchPaths = []string{"jacoco.xml"}

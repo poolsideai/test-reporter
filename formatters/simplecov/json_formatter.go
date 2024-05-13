@@ -2,13 +2,13 @@ package simplecov
 
 import (
 	"encoding/json"
-	"os"
 	"fmt"
+	"os"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
 )
 
 type branch struct {

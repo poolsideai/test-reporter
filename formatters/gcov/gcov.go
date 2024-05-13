@@ -9,10 +9,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
 	"gopkg.in/src-d/go-git.v4/plumbing/object"
 )
 
@@ -139,7 +139,7 @@ func getSourceFileName(coverageFileName string) (string, error) {
 
 		split := strings.SplitN(string(line), ":", 4)
 		if len(split) != 4 {
-			return "", errors.WithStack(errors.Errorf("Could not find source file name: %s", coverageFile.Name() ))
+			return "", errors.WithStack(errors.Errorf("Could not find source file name: %s", coverageFile.Name()))
 		}
 		sourceFileName = strings.TrimSpace(split[3])
 		return sourceFileName, nil

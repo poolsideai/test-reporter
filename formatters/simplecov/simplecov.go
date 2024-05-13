@@ -4,9 +4,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
 )
 
 var searchPaths = []string{"coverage/coverage.json", "coverage/.resultset.json"}
@@ -35,7 +35,7 @@ func (r Formatter) Format() (formatters.Report, error) {
 		return rep, err
 	}
 
-	rep, err = jsonFormat(r,rep)
+	rep, err = jsonFormat(r, rep)
 
 	if err != nil {
 		rep, err = legacyFormat(r, rep)

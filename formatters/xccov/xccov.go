@@ -5,10 +5,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
 )
 
 var searchPaths = []string{"coverage.json"}
@@ -82,7 +82,6 @@ func (r Formatter) Format() (formatters.Report, error) {
 			}
 		}
 	}
-
 
 	return report, nil
 }

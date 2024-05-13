@@ -6,7 +6,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/codeclimate/test-reporter/formatters/clover"
 	"github.com/codeclimate/test-reporter/formatters/cobertura"
@@ -22,6 +21,7 @@ import (
 	"github.com/codeclimate/test-reporter/formatters/xccov"
 	"github.com/gobuffalo/envy"
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 

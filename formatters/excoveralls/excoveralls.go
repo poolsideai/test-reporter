@@ -5,10 +5,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
 )
 
 var searchPaths = []string{"cover/excoveralls.json"}
@@ -64,7 +64,7 @@ func (r Formatter) Format() (formatters.Report, error) {
 }
 
 type jsonSourceFile struct {
-	Name     string              `json:"name,attr"`
+	Name     string               `json:"name,attr"`
 	Coverage []formatters.NullInt `json:"coverage,attr"`
 }
 
