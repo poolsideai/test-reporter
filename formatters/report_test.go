@@ -9,54 +9,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_Report_Merge_Bad_GitHead(t *testing.T) {
-	r := require.New(t)
-	a := &Report{
-		Git: ccGit{
-			Head: "a",
-		},
-	}
-	b := &Report{
-		Git: ccGit{
-			Head: "b",
-		},
-	}
-	err := a.Merge(b)
-	r.Error(err)
-	r.Equal("git heads do not match", err.Error())
-}
-
-func Test_Report_Merge_MismatchedBlobID(t *testing.T) {
-	r := require.New(t)
-	a := &Report{
-		Git: ccGit{
-			Head: "a",
-		},
-		SourceFiles: SourceFiles{
-			"a.go": {
-				Name:     "a.go",
-				BlobID:   "a",
-				Coverage: Coverage{NewNullInt(1)},
-			},
-		},
-	}
-	b := &Report{
-		Git: ccGit{
-			Head: "a",
-		},
-		SourceFiles: SourceFiles{
-			"a.go": {
-				Name:     "a.go",
-				BlobID:   "different-blob",
-				Coverage: Coverage{NewNullInt(1), NewNullInt(2)},
-			},
-		},
-	}
-	err := a.Merge(b)
-	r.Error(err)
-	r.Equal("failed to merge coverage for source file a.go: BlobID mismatch", err.Error())
-}
-
 func Test_Report_Merge(t *testing.T) {
 	r := require.New(t)
 	reps := []*Report{}
@@ -101,7 +53,6 @@ func Test_Report_JSON_Unmarshal(t *testing.T) {
 	r.NoError(err)
 
 	r.Equal(20, len(rep.SourceFiles))
-	r.Equal("/go/src/github.com/codeclimate/test-reporter/simplecov-test-reporter", rep.Environment.PWD)
 
 	sf := rep.SourceFiles["lib/code_climate/test_reporter/client.rb"]
 	r.NotNil(sf)

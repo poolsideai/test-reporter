@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -43,15 +42,13 @@ func (r Formatter) Format() (formatters.Report, error) {
 		return rep, errors.WithStack(err)
 	}
 
-	var gitHead, _ = env.GetHead()
-
 	var sf formatters.SourceFile
 	curLine := 1
 
 	for _, line := range bytes.Split(b, []byte("\n")) {
 		if bytes.HasPrefix(line, []byte("SF:")) {
 			name := string(bytes.TrimSpace(bytes.TrimPrefix(line, []byte("SF:"))))
-			sf, err = formatters.NewSourceFile(name, gitHead)
+			sf, err = formatters.NewSourceFile(name, nil)
 			if err != nil {
 				return rep, errors.WithStack(err)
 			}

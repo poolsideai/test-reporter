@@ -5,7 +5,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -47,11 +46,10 @@ func (r Formatter) Format() (formatters.Report, error) {
 		return report, errors.WithStack(err)
 	}
 
-	gitHead, _ := env.GetHead()
 	for _, target := range covFile.Targets {
 		for _, jsonFile := range target.Files {
 			num := 1
-			sourceFile, err := formatters.NewSourceFile(jsonFile.Path, gitHead)
+			sourceFile, err := formatters.NewSourceFile(jsonFile.Path, nil)
 			if err != nil {
 				logrus.Warnf("Couldn't find file for path \"%s\" from %s coverage data. Ignore if the path doesn't correspond to an existent file in your repo.", jsonFile.Path, r.Path)
 				continue

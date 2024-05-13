@@ -6,7 +6,6 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -49,7 +48,6 @@ func (r Formatter) Format() (formatters.Report, error) {
 		return rep, errors.WithStack(err)
 	}
 
-	gitHead, _ := env.GetHead()
 	for _, pp := range coberturaFile.Packages {
 		mergedClasses := make(map[string]*xmlClass)
 		// merge Classes by filename
@@ -68,7 +66,7 @@ func (r Formatter) Format() (formatters.Report, error) {
 			num := 1
 			fileName := coberturaFile.getFullFilePath(pf.FileName)
 			logrus.Debugf("creating test file report for %s", fileName)
-			sf, err := formatters.NewSourceFile(fileName, gitHead)
+			sf, err := formatters.NewSourceFile(fileName, nil)
 			if err != nil {
 				return rep, errors.WithStack(err)
 			}

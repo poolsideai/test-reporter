@@ -9,7 +9,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -56,9 +55,8 @@ func (f *Formatter) Format() (formatters.Report, error) {
 		return rep, err
 	}
 
-	gitHead, _ := env.GetHead()
 	for _, file := range f.FileNames {
-		sf, err := parseSourceFile(file, gitHead)
+		sf, err := parseSourceFile(file, nil)
 		if err != nil {
 			return rep, errors.WithStack(err)
 		}

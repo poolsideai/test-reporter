@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -86,9 +85,8 @@ func jsonFormat(r Formatter, rep formatters.Report) (formatters.Report, error) {
 		return rep, errors.WithStack(errors.Errorf("Simplecov report is on legacy format, falling back to legacy formatter."))
 	}
 
-	gitHead, _ := env.GetHead()
 	for n, ls := range m.CoverageType {
-		fe, err := formatters.NewSourceFile(n, gitHead)
+		fe, err := formatters.NewSourceFile(n, nil)
 		if err != nil {
 			return rep, errors.WithStack(err)
 		}

@@ -5,19 +5,11 @@ import (
 
 	"path/filepath"
 
-	"gopkg.in/src-d/go-git.v4/plumbing/object"
-
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/stretchr/testify/require"
 )
 
 func Test_Parse(t *testing.T) {
 	t.Run("should parse report from single package", func(t *testing.T) {
-		gb := env.GitBlob
-		defer func() { env.GitBlob = gb }()
-		env.GitBlob = func(s string, c *object.Commit) (string, error) {
-			return s, nil
-		}
 
 		r := require.New(t)
 
@@ -27,7 +19,8 @@ func Test_Parse(t *testing.T) {
 
 		r.Len(rep.SourceFiles, 4)
 
-		sf := rep.SourceFiles[filepath.FromSlash("github.com/codeclimate/test-reporter/formatters/source_file.go")]
+		sf, fok := rep.SourceFiles[filepath.FromSlash("github.com/codeclimate/test-reporter/formatters/source_file.go")]
+		r.True(fok)
 
 		r.InDelta(75.8, sf.CoveredPercent, 1)
 		r.Len(sf.Coverage, 115)
@@ -46,22 +39,19 @@ func Test_Parse(t *testing.T) {
 	// ./...
 	//
 	t.Run("should parse coverage report from multiple packages", func(t *testing.T) {
-		gb := env.GitBlob
-		defer func() { env.GitBlob = gb }()
-		env.GitBlob = func(s string, c *object.Commit) (string, error) {
-			return s, nil
-		}
 
 		r := require.New(t)
 
-		f := &Formatter{Path: filepath.Join("example", "foobar_test.out")}
+		f := &Formatter{Path: filepath.Join("example", "foobar_test.out"), GoModuleName: "github.com/codeclimate/test-reporter"}
 		rep, err := f.Format()
 		r.NoError(err)
 
 		r.Len(rep.SourceFiles, 2)
 
-		sfFoo := rep.SourceFiles[filepath.Join("example","foo","foo.go")]
-		sfBar := rep.SourceFiles[filepath.Join("example","bar","bar.go")]
+		sfFoo, okFoo := rep.SourceFiles[filepath.Join("formatters", "gocov", "example", "foo", "foo.go")]
+		r.True(okFoo)
+		sfBar, okBar := rep.SourceFiles[filepath.Join("formatters", "gocov", "example", "bar", "bar.go")]
+		r.True(okBar)
 
 		r.EqualValues(85, rep.CoveredPercent)
 		r.EqualValues(100, sfFoo.CoveredPercent)

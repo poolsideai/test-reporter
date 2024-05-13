@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -28,10 +27,9 @@ func legacyFormat(r Formatter, rep formatters.Report) (formatters.Report, error)
 		return rep, errors.WithStack(err)
 	}
 
-	gitHead, _ := env.GetHead()
 	for _, v := range m {
 		for n, ls := range v.Coverage {
-			fe, err := formatters.NewSourceFile(n, gitHead)
+			fe, err := formatters.NewSourceFile(n, nil)
 			if err != nil {
 				return rep, errors.WithStack(err)
 			}

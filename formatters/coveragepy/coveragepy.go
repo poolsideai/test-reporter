@@ -5,7 +5,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -47,12 +46,11 @@ func (r *Formatter) Format() (formatters.Report, error) {
 		return rep, errors.WithStack(err)
 	}
 
-	gitHead, _ := env.GetHead()
 	for _, xmlPackage := range coverageFile.Packages {
 		for _, xmlClass := range xmlPackage.Classes {
 			fileName := coverageFile.getFullFilePath(xmlClass.FileName)
 			logrus.Debugf("creating test file report for %s", fileName)
-			sourceFile, err := formatters.NewSourceFile(fileName, gitHead)
+			sourceFile, err := formatters.NewSourceFile(fileName, nil)
 			if err != nil {
 				return rep, errors.WithStack(err)
 			}

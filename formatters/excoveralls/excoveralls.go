@@ -5,7 +5,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -47,9 +46,8 @@ func (r Formatter) Format() (formatters.Report, error) {
 		return report, errors.WithStack(err)
 	}
 
-	gitHead, _ := env.GetHead()
 	for _, file := range coverageInput.Files {
-		sourceFile, err := formatters.NewSourceFile(file.Name, gitHead)
+		sourceFile, err := formatters.NewSourceFile(file.Name, nil)
 		if err != nil {
 			return report, errors.WithStack(err)
 		}

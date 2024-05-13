@@ -7,26 +7,16 @@ import (
 
 	"golang.org/x/tools/cover"
 
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
-	"github.com/gobuffalo/envy"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
-var basePackage string
-
-func init() {
-	basePackage, _ = os.Getwd()
-	for _, gp := range envy.GoPaths() {
-		basePackage = strings.TrimPrefix(basePackage, filepath.Join(gp, "src")+string(os.PathSeparator))
-	}
-}
-
 var searchPaths = []string{"c.out"}
 
 type Formatter struct {
-	Path string
+	Path         string
+	GoModuleName string
 }
 
 func (f *Formatter) Search(paths ...string) (string, error) {
@@ -53,10 +43,9 @@ func (r Formatter) Format() (formatters.Report, error) {
 		return rep, errors.WithStack(err)
 	}
 
-	gitHead, _ := env.GetHead()
 	for _, p := range profiles {
-		n := strings.TrimPrefix(filepath.FromSlash(p.FileName), basePackage+string(os.PathSeparator))
-		sf, err := formatters.NewSourceFile(n, gitHead)
+		n := strings.TrimPrefix(filepath.FromSlash(p.FileName), r.GoModuleName+string(os.PathSeparator))
+		sf, err := formatters.NewSourceFile(n, nil)
 		if err != nil {
 			return rep, errors.WithStack(err)
 		}

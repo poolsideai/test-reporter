@@ -5,7 +5,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -45,7 +44,6 @@ func (r Formatter) Format() (formatters.Report, error) {
 		return report, errors.WithStack(err)
 	}
 
-	gitHead, _ := env.GetHead()
 	for _, target := range covFile.Data {
 		report.CoveredPercent = target.Totals.Lines.Percent
 		regionsByFilename := make(map[string][]region)
@@ -57,7 +55,7 @@ func (r Formatter) Format() (formatters.Report, error) {
 		}
 
 		for filename, regions := range regionsByFilename {
-			sourceFile, err := formatters.NewSourceFile(filename, gitHead)
+			sourceFile, err := formatters.NewSourceFile(filename, nil)
 			if err != nil {
 				logrus.Warnf("Couldn't find file at path \"%s\" from %s coverage data. Ignore if the path doesn't correspond to an existent file in your repo.", filename, r.Path)
 				continue

@@ -8,18 +8,10 @@ import (
 	"os"
 	"testing"
 
-	"gopkg.in/src-d/go-git.v4/plumbing/object"
-
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/stretchr/testify/require"
 )
 
 func Test_Formatter_Parse(t *testing.T) {
-	gb := env.GitBlob
-	defer func() { env.GitBlob = gb }()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
 
 	r := require.New(t)
 	l := Formatter{Path: "./example.info"}
@@ -32,11 +24,6 @@ func Test_Formatter_Parse(t *testing.T) {
 }
 
 func Test_Format(t *testing.T) {
-	gb := env.GitBlob
-	defer func() { env.GitBlob = gb }()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
 
 	r := require.New(t)
 
@@ -58,11 +45,6 @@ func Test_Format(t *testing.T) {
 }
 
 func Benchmark_Format(b *testing.B) {
-	gb := env.GitBlob
-	defer func() { env.GitBlob = gb }()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
 
 	r := require.New(b)
 	inFile, err := genCoverage(1000, 1000)

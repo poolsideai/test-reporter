@@ -8,9 +8,7 @@ import (
 
 	"gopkg.in/src-d/go-git.v4/plumbing/object"
 
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/gobuffalo/envy"
-	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -24,9 +22,6 @@ type SourceFile struct {
 }
 
 func (a SourceFile) Merge(b SourceFile) (SourceFile, error) {
-	if a.BlobID != b.BlobID {
-		return a, errors.Errorf("failed to merge coverage for source file %s: BlobID mismatch", a.Name)
-	}
 	lenA := len(a.Coverage)
 	lenB := len(b.Coverage)
 
@@ -94,13 +89,6 @@ func NewSourceFile(name string, commit *object.Commit) (SourceFile, error) {
 	sf := SourceFile{
 		Name:     name,
 		Coverage: Coverage{},
-	}
-
-	var err error
-	sf.BlobID, err = env.GitBlob(name, commit)
-
-	if err != nil {
-		return sf, errors.WithStack(err)
 	}
 
 	if addPrefix, err := envy.MustGet("ADD_PREFIX"); err == nil {

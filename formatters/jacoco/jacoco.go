@@ -7,7 +7,6 @@ import (
 	"path"
 	"strings"
 
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/gobuffalo/envy"
 	"github.com/pkg/errors"
@@ -56,7 +55,6 @@ func (r Formatter) Format() (formatters.Report, error) {
 		return rep, errors.WithStack(err)
 	}
 
-	gitHead, _ := env.GetHead()
 	for _, xmlPackage := range xmlJacoco.Packages {
 		for _, xmlSF := range xmlPackage.SourceFile {
 			num := 1
@@ -68,7 +66,7 @@ func (r Formatter) Format() (formatters.Report, error) {
 					break
 				}
 			}
-			sf, err := formatters.NewSourceFile(absolutePath, gitHead)
+			sf, err := formatters.NewSourceFile(absolutePath, nil)
 			if err != nil {
 				logrus.Warnf("Couldn't find file for path \"%s\" from %s coverage data. Ignore if the path doesn't correspond to an existent file in your repo.", absolutePath, r.Path)
 				continue

@@ -3,21 +3,10 @@ package simplecov
 import (
 	"testing"
 
-	"gopkg.in/src-d/go-git.v4/plumbing/object"
-
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/stretchr/testify/require"
 )
 
 func Test_ParseLegacy(t *testing.T) {
-	ogb := env.GitBlob
-	defer func() {
-		env.GitBlob = ogb
-	}()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
-
 	assert := require.New(t)
 
 	formatter := Formatter{
@@ -37,14 +26,6 @@ func Test_ParseLegacy(t *testing.T) {
 }
 
 func Test_Parse(t *testing.T) {
-	ogb := env.GitBlob
-	defer func() {
-		env.GitBlob = ogb
-	}()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
-
 	assert := require.New(t)
 
 	formatter := Formatter{
@@ -64,14 +45,6 @@ func Test_Parse(t *testing.T) {
 }
 
 func Test_ParseWithBranch(t *testing.T) {
-	ogb := env.GitBlob
-	defer func() {
-		env.GitBlob = ogb
-	}()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
-
 	assert := require.New(t)
 
 	formatter := Formatter{
@@ -91,14 +64,6 @@ func Test_ParseWithBranch(t *testing.T) {
 }
 
 func Test_ParseWithBranchWithNoCov(t *testing.T) {
-	ogb := env.GitBlob
-	defer func() {
-		env.GitBlob = ogb
-	}()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
-
 	assert := require.New(t)
 
 	formatter := Formatter{
@@ -118,12 +83,6 @@ func Test_ParseWithBranchWithNoCov(t *testing.T) {
 }
 
 func Test_FormatLegacy(t *testing.T) {
-	gb := env.GitBlob
-	defer func() { env.GitBlob = gb }()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
-
 	assert := require.New(t)
 
 	formatter := Formatter{
@@ -144,12 +103,6 @@ func Test_FormatLegacy(t *testing.T) {
 }
 
 func Test_Format(t *testing.T) {
-	gb := env.GitBlob
-	defer func() { env.GitBlob = gb }()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
-
 	assert := require.New(t)
 
 	formatter := Formatter{
@@ -170,12 +123,6 @@ func Test_Format(t *testing.T) {
 }
 
 func Test_FormatWithBranch(t *testing.T) {
-	gb := env.GitBlob
-	defer func() { env.GitBlob = gb }()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
-
 	assert := require.New(t)
 
 	formatter := Formatter{
@@ -196,12 +143,6 @@ func Test_FormatWithBranch(t *testing.T) {
 }
 
 func Test_FormatWithBranchWithNoCovLines(t *testing.T) {
-	gb := env.GitBlob
-	defer func() { env.GitBlob = gb }()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
-
 	assert := require.New(t)
 
 	formatter := Formatter{
@@ -222,12 +163,6 @@ func Test_FormatWithBranchWithNoCovLines(t *testing.T) {
 }
 
 func Test_Format_Merged(t *testing.T) {
-	gb := env.GitBlob
-	defer func() { env.GitBlob = gb }()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
-
 	assert := require.New(t)
 
 	formatter := Formatter{
@@ -250,14 +185,6 @@ func Test_Format_Merged(t *testing.T) {
 }
 
 func Test_ParseWithGroups(t *testing.T) {
-	ogb := env.GitBlob
-	defer func() {
-		env.GitBlob = ogb
-	}()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
-
 	assert := require.New(t)
 
 	formatter := Formatter{

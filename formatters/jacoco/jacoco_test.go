@@ -3,20 +3,12 @@ package jacoco
 import (
 	"testing"
 
-	"gopkg.in/src-d/go-git.v4/plumbing/object"
-
-	"github.com/codeclimate/test-reporter/env"
 	"github.com/codeclimate/test-reporter/formatters"
 	"github.com/gobuffalo/envy"
 	"github.com/stretchr/testify/require"
 )
 
 func Test_Parse(t *testing.T) {
-	gb := env.GitBlob
-	defer func() { env.GitBlob = gb }()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
 
 	r := require.New(t)
 
@@ -35,11 +27,6 @@ func Test_Parse(t *testing.T) {
 }
 
 func Test_Parse_SourcePath(t *testing.T) {
-	gb := env.GitBlob
-	defer func() { env.GitBlob = gb }()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
 
 	r := require.New(t)
 
@@ -63,11 +50,6 @@ func Test_Parse_SourcePath(t *testing.T) {
 }
 
 func Test_Parse_SourcePaths(t *testing.T) {
-	gb := env.GitBlob
-	defer func() { env.GitBlob = gb }()
-	env.GitBlob = func(s string, c *object.Commit) (string, error) {
-		return s, nil
-	}
 
 	r := require.New(t)
 
