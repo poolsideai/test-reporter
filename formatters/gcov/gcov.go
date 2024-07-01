@@ -107,7 +107,7 @@ func parseSourceFile(fileName string, gitHead *object.Commit) (formatters.Source
 		switch coverage {
 		case "-":
 			sf.Coverage = append(sf.Coverage, formatters.NullInt{})
-		case "#####":
+		case "#####", "=====":
 			sf.Coverage = append(sf.Coverage, formatters.NewNullInt(0))
 		default: // coverage is number of hits
 			// trailing * means that gcov detected an unexecuted block, and we don't
