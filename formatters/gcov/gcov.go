@@ -110,6 +110,12 @@ func parseSourceFile(fileName string, gitHead *object.Commit) (formatters.Source
 		case "#####":
 			sf.Coverage = append(sf.Coverage, formatters.NewNullInt(0))
 		default: // coverage is number of hits
+			// trailing * means that gcov detected an unexecuted block, and we don't
+			// care that deeply. Example - a single-line if (x) { a } else { b } will
+			// report with an asterisk if block b is never executed.
+			if len(coverage) > 0 && coverage[len(coverage)-1] == '*' {
+				coverage = coverage[:len(coverage)-1]
+			}
 			num, err := strconv.Atoi(coverage)
 			if err != nil {
 				return sf, errors.WithStack(err)
