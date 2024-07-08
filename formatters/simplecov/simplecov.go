@@ -38,6 +38,10 @@ func (r Formatter) Format() (formatters.Report, error) {
 	rep, err = jsonFormat(r, rep)
 
 	if err != nil {
+		rep, err = customFormat(r, rep)
+	}
+
+	if err != nil {
 		rep, err = legacyFormat(r, rep)
 	}
 

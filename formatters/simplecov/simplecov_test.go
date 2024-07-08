@@ -142,6 +142,23 @@ func Test_FormatWithBranch(t *testing.T) {
 	assert.Equal(lc.Total, 57)
 }
 
+func Test_CustomFormat(t *testing.T) {
+	assert := require.New(t)
+
+	formatter := Formatter{
+		Path: "./simplecov-example-custom.json",
+	}
+	rep, err := formatter.Format()
+	assert.NoError(err)
+
+	assert.InDelta(91.80, rep.CoveredPercent, 1)
+
+	lc := rep.LineCounts
+	assert.Equal(lc.Covered, 56)
+	assert.Equal(lc.Missed, 5)
+	assert.Equal(lc.Total, 61)
+}
+
 func Test_FormatWithBranchWithNoCovLines(t *testing.T) {
 	assert := require.New(t)
 
