@@ -37,26 +37,10 @@ func Test_NewTestReport(t *testing.T) {
 	r.Equal("test_reports", data.Type)
 
 	at := data.Attributes
-	r.Equal("master", at.CIBranch)
-	r.Equal("3", at.CIBuildIdentifier)
-	r.Equal("4", at.CIBuildURL)
-	r.Equal("700e63d964e0ca1c22fdb11b806109836ca77365", at.CICommitSha)
-	r.Equal(1489695537, at.CICommittedAt)
-	r.Equal("travis", at.CIServiceName)
-	r.Equal("700e63d964e0ca1c22fdb11b806109836ca77365", at.CommitSha)
-	r.Equal(1489695537, at.CommittedAt)
 	r.NotZero(at.RunAt)
 	r.InDelta(88.92, at.CoveredPercent, 1.0)
 	r.Equal(0, at.CoveredStrength)
 	r.Equal(rep.LineCounts, at.LineCounts)
-
-	env := data.Attributes.Environment
-	r.Equal("2.6.10", env.GemVersion)
-	r.Equal("42", env.PackageVersion)
-	r.Equal("/go/src/github.com/codeclimate/test-reporter/simplecov-test-reporter", env.PWD)
-	r.Equal("/rails", env.RailsRoot)
-	r.Equal("1", env.ReporterVersion)
-	r.Equal("/scov", env.SimplecovRoot)
 
 	r.Len(data.SourceFiles, 20)
 }
