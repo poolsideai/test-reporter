@@ -10,9 +10,9 @@ import (
 	"strings"
 
 	"github.com/codeclimate/test-reporter/formatters"
+	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-	"gopkg.in/src-d/go-git.v4/plumbing/object"
 )
 
 // Formatter collects GCov files, parses them, then formats them into a single report.

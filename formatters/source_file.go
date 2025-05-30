@@ -6,8 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"gopkg.in/src-d/go-git.v4/plumbing/object"
-
+	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/gobuffalo/envy"
 	"github.com/sirupsen/logrus"
 )
